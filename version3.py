@@ -21,20 +21,22 @@ screen_Y = 400
 screen = pygame.display.set_mode((screen_X, screen_Y))
 pygame.display.set_caption('Novo Jogo')
 
-fonte = pygame.font.SysFont('arial black', 20 )
+pygame.mouse.set_cursor(*pygame.cursors.broken_x)
+
+fonte = pygame.font.SysFont('monospace', 20 )
 fonte2 = pygame.font.SysFont('arial black', 40 )
 
 textoRodada = fonte.render('Round | 1  ' , True, (255,255,255), (0,0,0))
 pos_textoRodada = textoRodada.get_rect()
-pos_textoRodada.center = (465, 20)
+pos_textoRodada.center = (455, 20)
 
 texto = fonte.render(f'Tempo | {tempo_segundo} ' , True, (255,255,255), (0,0,0))
 pos_texto = texto.get_rect()
-pos_texto.center = (463, 40)
+pos_texto.center = (460, 40)
 
 texto2 = fonte.render('Mosquitos | 0  ' , True, (255,255,255), (0,0,0))
 pos_texto2 = texto2.get_rect()
-pos_texto2.center = (456, 60)
+pos_texto2.center = (447, 60)
 
 game_over = fonte2.render('Game Over' , True, (255,255,255), (0,0,0))
 pos_texto3 = game_over.get_rect()
@@ -45,6 +47,7 @@ pos_texto4.center = (250, 230)
 
 pos_texto5 = game_over.get_rect()
 pos_texto5.center = (250, 250)
+
 
 mosquito_img_path = os.path.join('assets','mosquitao5.png')
 mosquito_img = pygame.image.load(mosquito_img_path)
@@ -82,8 +85,8 @@ def criar_mosquitos(qtd_mosquitos):
    
 # Criando posições randomicas pra cada mosquito
   for j in range(qtd_mosquitos):
-    x = random.randint(0, screen_X)
-    y = random.randint(0, screen_Y)
+    x = random.randint(24, screen_X - 24)
+    y = random.randint(24, screen_Y - 24)
     z = num = random.randint(0,1)
     mosquito_arr.append((x,y,z))
  
@@ -113,10 +116,15 @@ while running:
         break
         
       elif event.type == pygame.MOUSEBUTTONDOWN:
+        pygame.mouse.set_cursor(*pygame.cursors.diamond)
         click = (mouse_pos)
         collision(click)
         if tempo_segundo > 0:
           pontos += 1
+
+      elif event.type == pygame.MOUSEBUTTONUP:
+        pygame.mouse.set_cursor(*pygame.cursors.broken_x)
+
 
     click = pygame.mouse.get_pressed()
 

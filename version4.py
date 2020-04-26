@@ -11,11 +11,12 @@ GRAY   = (100,  100,  100, 200)
 
 pygame.init()
 
-pontos = 0
+
 qtd_mosquitos = 0
 tempo_segundo = 14
 timer = 0
 rodada = 0
+
 
 screen_X = 500
 screen_Y = 400
@@ -59,6 +60,7 @@ bg_img = pygame.image.load(bg_img_path)
 #game_over, pos_texto3
 clock = pygame.time.Clock()
 
+
 def collision(click):
   #print(mosquito_arr)    
   print(f'Click: {click}')
@@ -66,15 +68,16 @@ def collision(click):
   for m in range(len(mosquito_arr)):
     #print(mosquito_arr[m][0], mosquito_arr[m][1])  
 
-    if abs(click[0] - mosquito_arr[m][0]) < 18 and abs(click[1] - mosquito_arr[m][1]) < 16:
-      print(pontos)
-      print('hit!')   
+    if abs(click[0] - mosquito_arr[m][0]) < 18 and abs(click[1] - mosquito_arr[m][1]) < 16:  
+      print('hit!')  
+      pontos.append(1)
       mosquito_arr.pop(m)
+
       break
 
 
 
-
+pontos = []
 mosquito_arr = [] 
 def criar_mosquitos(qtd_mosquitos):
 # Criação do array de mosquitos
@@ -92,7 +95,7 @@ running = True
 game = True
 # game loop
 while running:
-
+  
 
   for event in pygame.event.get(): 
     if tempo_segundo < 0:   
@@ -108,6 +111,7 @@ while running:
     click = ''
     mouse_pos = pygame.mouse.get_pos() 
 
+
     for event in pygame.event.get(): 
       if event.type == pygame.QUIT: 
         running = False
@@ -118,8 +122,7 @@ while running:
         pygame.mouse.set_cursor(*pygame.cursors.diamond)
         click = (mouse_pos)
         collision(click)
-        if tempo_segundo >= 0:
-          pontos += 1
+
 
       elif event.type == pygame.MOUSEBUTTONUP:
         pygame.mouse.set_cursor(*pygame.cursors.broken_x)
@@ -138,7 +141,7 @@ while running:
 
 
     textoRodada = fonte.render('Rodada | ' + str(rodada) + ' ' , True, (255,255,255), (0,0,0))   
-    texto2 = fonte.render('Mosquitos | ' + str(pontos) + ' ' , True, (255,255,255), (0,0,0))  
+    texto2 = fonte.render('Mosquitos | ' + str(len(pontos)) + ' ' , True, (255,255,255), (0,0,0))  
     
     screen.blit(bg_img,(0, 0)) 
     screen.blit(texto, pos_texto)
